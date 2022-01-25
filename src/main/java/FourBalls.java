@@ -5,10 +5,18 @@ public class FourBalls extends PApplet {
     public static final int WIDTH = 640;
     public static final int HEIGHT = 380;
     public static final int DIAMETER = 10;
-    private  int firstBallXCoordinate=0;
-    private  int secondBallXCoordinate=0;
-    private  int thirdBallXCoordinate=0;
-    private  int fourthBallXCoordinate=0;
+    private final int[] ballsXCoordinate=new int[4];
+    private final int[] ballsYCoordinate=new int[4];
+
+
+    public FourBalls() {
+        initializeHeights();
+    }
+
+    private void initializeHeights() {
+        for (int iterator = 0; iterator <ballsYCoordinate.length ; iterator++)
+            ballsYCoordinate[iterator]=(iterator+1)*HEIGHT/5;
+    }
 
     public static void main(String[] args) {
         PApplet.main("FourBalls",args);
@@ -27,25 +35,34 @@ public class FourBalls extends PApplet {
 
     @Override
     public void draw() {
-        int speed = 1;
 
-        drawCircle(firstBallXCoordinate,HEIGHT/5);
-        firstBallXCoordinate+= speed;
+        drawBalls();
+        increaseSpeed();
+    }
 
-        drawCircle(secondBallXCoordinate,2*HEIGHT/5);
-        secondBallXCoordinate+= speed *2;
-
-        drawCircle(thirdBallXCoordinate,3*HEIGHT/5);
-        thirdBallXCoordinate+= speed *3;
-
-        drawCircle(fourthBallXCoordinate,4*HEIGHT/5);
-        fourthBallXCoordinate+= speed *4;
+    private void increaseSpeed() {
+        for (int iterator = 0; iterator < 4; iterator++) {
+            setXCoordinate(iterator);
+        }
 
     }
 
-    private void drawCircle(int xCoordinate, int yCoordinate) {
+    private void drawBalls() {
+        for (int iterator = 0; iterator < 4; iterator++) {
+            createCircle(ballsXCoordinate[iterator],ballsYCoordinate[iterator]);
+        }
+    }
+
+    private void createCircle(int xCoordinate, int yCoordinate) {
 
         ellipse(xCoordinate,yCoordinate, DIAMETER,DIAMETER);
+    }
+
+    private void setXCoordinate(int ballNUmber){
+
+        int speed=1;
+        ballsXCoordinate[ballNUmber]+=speed*(ballNUmber+1);
+
     }
 }
 
